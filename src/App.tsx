@@ -13,6 +13,7 @@ export default function App() {
     setTitle,
     handleAddWord,
     handleRemoveWord,
+    handleClearWords,
     handleChange,
     handleGenerate,
     handleBulkImport,
@@ -38,6 +39,7 @@ export default function App() {
           words={words}
           onAddWord={handleAddWord}
           onRemoveWord={handleRemoveWord}
+          onClearWords={handleClearWords}
           onChangeWord={handleChange}
           onGenerate={handleGenerate}
           onBulkImport={handleBulkImport}

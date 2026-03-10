@@ -10,6 +10,7 @@ interface SidebarProps {
   words: WordInput[];
   onAddWord: () => void;
   onRemoveWord: (id: string) => void;
+  onClearWords: () => void;
   onChangeWord: (id: string, field: 'word' | 'clue', value: string) => void;
   onGenerate: () => void;
   onBulkImport: (text: string) => boolean;
@@ -21,6 +22,7 @@ export function Sidebar({
   words,
   onAddWord,
   onRemoveWord,
+  onClearWords,
   onChangeWord,
   onGenerate,
   onBulkImport
@@ -67,6 +69,7 @@ export function Sidebar({
             words={words}
             onAdd={onAddWord}
             onRemove={onRemoveWord}
+            onClear={onClearWords}
             onChange={onChangeWord}
           />
         )}

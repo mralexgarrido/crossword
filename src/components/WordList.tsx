@@ -6,10 +6,11 @@ interface WordListProps {
   words: WordInput[];
   onChange: (id: string, field: 'word' | 'clue', value: string) => void;
   onRemove: (id: string) => void;
+  onClear: () => void;
   onAdd: () => void;
 }
 
-export function WordList({ words, onChange, onRemove, onAdd }: WordListProps) {
+export function WordList({ words, onChange, onRemove, onClear, onAdd }: WordListProps) {
   const validWordsCount = words.filter(w => w.word.trim() !== '').length;
 
   return (
@@ -18,12 +19,22 @@ export function WordList({ words, onChange, onRemove, onAdd }: WordListProps) {
         <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
           Words ({validWordsCount}/50)
         </span>
-        <button
-          onClick={onAdd}
-          className="text-xs font-medium text-stone-700 hover:text-stone-900 flex items-center gap-1 transition-colors border border-stone-300 rounded px-2 py-1 bg-white hover:bg-stone-50 shadow-sm"
-        >
-          <Plus size={12} /> Add Word
-        </button>
+        <div className="flex items-center gap-2">
+          {words.length > 0 && (
+            <button
+              onClick={onClear}
+              className="text-xs font-medium text-red-600 hover:text-red-700 flex items-center gap-1 transition-colors border border-red-200 hover:border-red-300 rounded px-2 py-1 bg-white hover:bg-red-50 shadow-sm"
+            >
+              <Trash2 size={12} /> Clear All
+            </button>
+          )}
+          <button
+            onClick={onAdd}
+            className="text-xs font-medium text-stone-700 hover:text-stone-900 flex items-center gap-1 transition-colors border border-stone-300 rounded px-2 py-1 bg-white hover:bg-stone-50 shadow-sm"
+          >
+            <Plus size={12} /> Add Word
+          </button>
+        </div>
       </div>
 
       {words.map((word) => (

@@ -49,6 +49,13 @@ export function useCrosswordBuilder() {
     setWords(prev => prev.filter(w => w.id !== id));
   }, []);
 
+  const handleClearWords = useCallback(() => {
+    if (window.confirm('Are you sure you want to clear all words?')) {
+      setWords([]);
+      setLayout(null);
+    }
+  }, []);
+
   const handleChange = useCallback((id: string, field: 'word' | 'clue', value: string) => {
     setWords(prev => prev.map(w => w.id === id ? { ...w, [field]: value } : w));
   }, []);
@@ -99,6 +106,7 @@ export function useCrosswordBuilder() {
     setTitle,
     handleAddWord,
     handleRemoveWord,
+    handleClearWords,
     handleChange,
     handleGenerate,
     handleBulkImport,
