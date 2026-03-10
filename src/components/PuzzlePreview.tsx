@@ -22,12 +22,12 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
 
   if (!layout) {
     return (
-      <div className="h-full flex flex-col items-center justify-center text-stone-400 print:hidden">
-        <div className="w-24 h-24 border-4 border-dashed border-stone-300 rounded-xl flex items-center justify-center mb-4 bg-white/50">
-          <span className="font-serif text-4xl text-stone-300">?</span>
+      <div className="h-full flex flex-col items-center justify-center text-gray-400 print:hidden mt-20">
+        <div className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center mb-6 bg-white/50 shadow-sm">
+          <span className="text-4xl text-gray-300 font-light">?</span>
         </div>
-        <p className="text-lg font-medium text-stone-500 font-serif">No puzzle generated yet</p>
-        <p className="text-sm max-w-sm text-center mt-2 text-stone-500">Add some words and clues on the left, then click "Generate Puzzle" to see it here.</p>
+        <p className="text-lg font-semibold text-gray-700">No puzzle generated yet</p>
+        <p className="text-sm max-w-sm text-center mt-2 text-gray-500 leading-relaxed">Add some words and clues on the left, then click "Generate Puzzle" to see it here.</p>
       </div>
     );
   }
@@ -37,44 +37,42 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
 
       {/* Unplaced Words Warning */}
       {layout.unplacedWords.length > 0 && (
-        <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-md print:hidden shadow-sm" role="alert">
-          <div className="flex items-start">
-            <AlertCircle className="text-amber-500 mt-0.5 mr-3 shrink-0" size={20} />
-            <div>
-              <h3 className="text-sm font-medium text-amber-800">Could not place {layout.unplacedWords.length} word(s)</h3>
-              <p className="text-sm text-amber-700 mt-1">
-                The generator couldn't find a valid intersection for: {layout.unplacedWords.map(w => w.word).join(', ')}.
-                Try adding more words to create more intersection opportunities.
-              </p>
-            </div>
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl print:hidden shadow-sm flex items-start gap-3" role="alert">
+          <AlertCircle className="text-amber-500 mt-0.5 shrink-0" size={20} />
+          <div>
+            <h3 className="text-sm font-bold text-amber-800">Could not place {layout.unplacedWords.length} word(s)</h3>
+            <p className="text-sm text-amber-700 mt-1 leading-relaxed">
+              The generator couldn't find a valid intersection for: <span className="font-semibold">{layout.unplacedWords.map(w => w.word).join(', ')}</span>.
+              Try adding more words to create more intersection opportunities.
+            </p>
           </div>
         </div>
       )}
 
       {/* PAGE 1: The Puzzle */}
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-stone-200 print:shadow-none print:border-none print:p-0 print:m-0">
+      <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 print:shadow-none print:border-none print:p-0 print:m-0">
 
         {/* Web Preview Header */}
-        <div className="text-center mb-8 print:hidden">
-          <h2 className="text-3xl font-serif font-bold text-stone-900">{title}</h2>
-          <p className="text-stone-500 mt-2 uppercase tracking-widest text-xs font-semibold">Crossword Puzzle</p>
+        <div className="text-center mb-10 print:hidden">
+          <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{title}</h2>
+          <p className="text-gray-500 mt-2 uppercase tracking-widest text-xs font-semibold">Crossword Puzzle</p>
         </div>
 
         {/* Premium Print Header */}
-        <div className="hidden print:block mb-12">
-          <div className="flex justify-between items-end border-b-2 border-stone-800 pb-4 mb-8">
+        <div className="hidden print:block mb-8">
+          <div className="flex justify-between items-end border-b-2 border-gray-900 pb-3 mb-6">
             <div>
-              <h2 className="text-4xl font-serif font-bold text-stone-900 tracking-tight">{title}</h2>
-              <p className="text-stone-500 font-sans mt-2 uppercase tracking-widest text-xs font-semibold">Crossword Puzzle</p>
+              <h2 className="text-2xl font-bold text-gray-900 tracking-tight">{title}</h2>
+              <p className="text-gray-500 mt-1 uppercase tracking-widest text-[10px] font-bold">Crossword Puzzle</p>
             </div>
-            <div className="flex gap-8 text-sm font-sans text-stone-600">
+            <div className="flex gap-8 text-sm text-gray-600">
               <div className="flex flex-col">
-                <span className="uppercase text-[10px] font-bold tracking-wider text-stone-400 mb-1">Name</span>
-                <div className="w-48 border-b border-stone-400 h-4"></div>
+                <span className="uppercase text-[10px] font-bold tracking-wider text-gray-400 mb-1">Name</span>
+                <div className="w-48 border-b border-gray-400 h-3"></div>
               </div>
               <div className="flex flex-col">
-                <span className="uppercase text-[10px] font-bold tracking-wider text-stone-400 mb-1">Date</span>
-                <div className="w-32 border-b border-stone-400 h-4"></div>
+                <span className="uppercase text-[10px] font-bold tracking-wider text-gray-400 mb-1">Date</span>
+                <div className="w-32 border-b border-gray-400 h-3"></div>
               </div>
             </div>
           </div>
@@ -93,7 +91,7 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
               row.map((cell, x) => (
                 <div
                   key={`${x}-${y}`}
-                  className={`relative flex items-center justify-center ${cell ? 'bg-white border border-stone-800 shadow-sm print:shadow-none' : 'bg-transparent'}`}
+                  className={`relative flex items-center justify-center ${cell ? 'bg-white border border-gray-800 shadow-sm print:shadow-none' : 'bg-transparent'}`}
                   style={{
                     height: cellSize,
                     marginLeft: cell && x > 0 && row[x-1] ? '-1px' : '0',
@@ -103,12 +101,12 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
                   role={cell ? "gridcell" : "presentation"}
                 >
                   {cell && cell.number && (
-                    <span className="absolute top-0.5 left-0.5 text-[10px] sm:text-xs leading-none font-bold text-stone-800 select-none">
+                    <span className="absolute top-0.5 left-1 text-[10px] sm:text-xs leading-none font-bold text-gray-800 select-none">
                       {cell.number}
                     </span>
                   )}
                   {cell && showAnswers && (
-                    <span className="text-lg font-bold uppercase text-blue-800 select-none font-sans" style={{fontFamily: 'monospace'}}>
+                    <span className="text-lg font-bold uppercase text-blue-600 select-none" style={{fontFamily: 'monospace'}}>
                       {cell.letter}
                     </span>
                   )}
@@ -120,53 +118,53 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
       </div>
 
       {/* PAGE 2: The Clues */}
-      <div className="page-break bg-white p-8 rounded-xl shadow-sm border border-stone-200 print:shadow-none print:border-none print:p-0 print:m-0 print:pt-12">
-        <div className="hidden print:block mb-10 text-center">
-          <h2 className="text-3xl font-serif font-bold text-stone-900">{title}</h2>
-          <p className="text-stone-500 font-sans mt-2 uppercase tracking-widest text-xs font-semibold">Clues</p>
+      <div className="page-break bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 print:shadow-none print:border-none print:p-0 print:m-0 print:pt-6">
+        <div className="hidden print:block mb-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">{title}</h2>
+          <p className="text-gray-500 mt-1 uppercase tracking-widest text-[10px] font-bold">Clues</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 print:grid-cols-2 print:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 print:grid-cols-2 print:gap-8">
           {/* Across Clues */}
           <div>
-            <h3 className="text-xl font-serif font-bold text-stone-900 border-b border-stone-300 pb-3 mb-6">Across</h3>
-            <ul className="space-y-4">
+            <h3 className="text-lg print:text-base font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Across</h3>
+            <ul className="space-y-4 print:space-y-2">
               {layout.placedWords
                 .filter(w => w.direction === 'across')
                 .sort((a, b) => a.number - b.number)
                 .map(w => (
-                  <li key={w.id} className="flex gap-4 text-stone-800 leading-relaxed">
-                    <span className="font-bold font-sans text-stone-900 shrink-0 w-6 text-right">{w.number}.</span>
-                    <span className="font-serif text-lg">
+                  <li key={w.id} className="flex gap-4 print:gap-3 text-gray-700 leading-relaxed print:leading-snug">
+                    <span className="font-bold text-gray-900 shrink-0 w-6 print:w-4 text-right print:text-xs">{w.number}.</span>
+                    <span className="text-[15px] print:text-xs">
                       {w.clue}
-                      {showAnswers && <span className="ml-2 text-blue-800 font-sans text-sm uppercase font-semibold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
+                      {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[10px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
                     </span>
                   </li>
                 ))}
               {layout.placedWords.filter(w => w.direction === 'across').length === 0 && (
-                <li className="text-stone-400 italic font-serif">No across words.</li>
+                <li className="text-gray-400 italic print:text-xs">No across words.</li>
               )}
             </ul>
           </div>
 
           {/* Down Clues */}
           <div>
-            <h3 className="text-xl font-serif font-bold text-stone-900 border-b border-stone-300 pb-3 mb-6">Down</h3>
-            <ul className="space-y-4">
+            <h3 className="text-lg print:text-base font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Down</h3>
+            <ul className="space-y-4 print:space-y-2">
               {layout.placedWords
                 .filter(w => w.direction === 'down')
                 .sort((a, b) => a.number - b.number)
                 .map(w => (
-                  <li key={w.id} className="flex gap-4 text-stone-800 leading-relaxed">
-                    <span className="font-bold font-sans text-stone-900 shrink-0 w-6 text-right">{w.number}.</span>
-                    <span className="font-serif text-lg">
+                  <li key={w.id} className="flex gap-4 print:gap-3 text-gray-700 leading-relaxed print:leading-snug">
+                    <span className="font-bold text-gray-900 shrink-0 w-6 print:w-4 text-right print:text-xs">{w.number}.</span>
+                    <span className="text-[15px] print:text-xs">
                       {w.clue}
-                      {showAnswers && <span className="ml-2 text-blue-800 font-sans text-sm uppercase font-semibold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
+                      {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[10px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
                     </span>
                   </li>
                 ))}
               {layout.placedWords.filter(w => w.direction === 'down').length === 0 && (
-                <li className="text-stone-400 italic font-serif">No down words.</li>
+                <li className="text-gray-400 italic print:text-xs">No down words.</li>
               )}
             </ul>
           </div>
