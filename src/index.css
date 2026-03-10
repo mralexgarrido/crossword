@@ -15,7 +15,7 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     background-color: white !important;
-    padding: 0.5in;
+    padding: 0.3in;
   }
 
   /* Force background colors to print */

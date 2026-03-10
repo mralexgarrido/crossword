@@ -118,53 +118,54 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
       </div>
 
       {/* PAGE 2: The Clues */}
-      <div className="page-break bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 print:shadow-none print:border-none print:p-0 print:m-0 print:pt-6">
-        <div className="hidden print:block mb-8 text-center">
+      <div className="page-break bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 print:shadow-none print:border-none print:p-0 print:m-0 print:pt-2">
+        <div className="hidden print:hidden mb-8 text-center">
+          {/* Header explicitly hidden in print to save space for dense clues */}
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">{title}</h2>
           <p className="text-gray-500 mt-1 uppercase tracking-widest text-[10px] font-bold">Clues</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 print:grid-cols-2 print:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 print:grid-cols-2 print:gap-4">
           {/* Across Clues */}
           <div>
-            <h3 className="text-lg print:text-base font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Across</h3>
-            <ul className="space-y-4 print:space-y-2">
+            <h3 className="text-lg print:text-sm font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 print:pb-1 print:mb-2">Across</h3>
+            <ul className="space-y-4 print:space-y-1">
               {layout.placedWords
                 .filter(w => w.direction === 'across')
                 .sort((a, b) => a.number - b.number)
                 .map(w => (
-                  <li key={w.id} className="flex gap-4 print:gap-3 text-gray-700 leading-relaxed print:leading-snug">
-                    <span className="font-bold text-gray-900 shrink-0 w-6 print:w-4 text-right print:text-xs">{w.number}.</span>
-                    <span className="text-[15px] print:text-xs">
+                  <li key={w.id} className="flex gap-4 print:gap-2 text-gray-700 leading-relaxed print:leading-tight">
+                    <span className="font-bold text-gray-900 shrink-0 w-6 print:w-3.5 text-right print:text-[10px]">{w.number}.</span>
+                    <span className="text-[15px] print:text-[10px]">
                       {w.clue}
-                      {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[10px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
+                      {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[9px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
                     </span>
                   </li>
                 ))}
               {layout.placedWords.filter(w => w.direction === 'across').length === 0 && (
-                <li className="text-gray-400 italic print:text-xs">No across words.</li>
+                <li className="text-gray-400 italic print:text-[10px]">No across words.</li>
               )}
             </ul>
           </div>
 
           {/* Down Clues */}
           <div>
-            <h3 className="text-lg print:text-base font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Down</h3>
-            <ul className="space-y-4 print:space-y-2">
+            <h3 className="text-lg print:text-sm font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4 print:pb-1 print:mb-2">Down</h3>
+            <ul className="space-y-4 print:space-y-1">
               {layout.placedWords
                 .filter(w => w.direction === 'down')
                 .sort((a, b) => a.number - b.number)
                 .map(w => (
-                  <li key={w.id} className="flex gap-4 print:gap-3 text-gray-700 leading-relaxed print:leading-snug">
-                    <span className="font-bold text-gray-900 shrink-0 w-6 print:w-4 text-right print:text-xs">{w.number}.</span>
-                    <span className="text-[15px] print:text-xs">
+                  <li key={w.id} className="flex gap-4 print:gap-2 text-gray-700 leading-relaxed print:leading-tight">
+                    <span className="font-bold text-gray-900 shrink-0 w-6 print:w-3.5 text-right print:text-[10px]">{w.number}.</span>
+                    <span className="text-[15px] print:text-[10px]">
                       {w.clue}
-                      {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[10px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
+                      {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[9px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
                     </span>
                   </li>
                 ))}
               {layout.placedWords.filter(w => w.direction === 'down').length === 0 && (
-                <li className="text-gray-400 italic print:text-xs">No down words.</li>
+                <li className="text-gray-400 italic print:text-[10px]">No down words.</li>
               )}
             </ul>
           </div>
