@@ -25,7 +25,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-100 font-sans text-stone-900 flex flex-col">
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-900 flex flex-col">
       <Header
         showAnswers={showAnswers}
         onToggleAnswers={toggleShowAnswers}
@@ -45,8 +45,7 @@ export default function App() {
           onBulkImport={handleBulkImport}
         />
 
-        <div className="flex-1 overflow-y-auto bg-[#F4F1EA] p-4 lg:p-8 print:p-0 print:bg-white print:overflow-visible relative">
-          <div className="absolute inset-0 opacity-5 pointer-events-none print:hidden" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")' }}></div>
+        <div className="flex-1 overflow-y-auto bg-gray-50/50 p-4 lg:p-8 print:p-0 print:bg-white print:overflow-visible relative">
           <div className="relative z-10">
             <PuzzlePreview
               layout={layout}
