@@ -8,7 +8,7 @@
 
 @media print {
   @page {
-    margin: 0.5in;
+    margin: 0; /* Removes default browser header/footer text */
     size: letter;
   }
   
@@ -16,6 +16,7 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     background-color: white !important;
+    padding: 0.5in;
   }
 
   /* Force background colors to print */

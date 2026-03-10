@@ -61,20 +61,20 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
         </div>
 
         {/* Premium Print Header */}
-        <div className="hidden print:block mb-12">
-          <div className="flex justify-between items-end border-b-2 border-stone-800 pb-4 mb-8">
+        <div className="hidden print:block mb-6">
+          <div className="flex justify-between items-end border-b-2 border-stone-800 pb-2 mb-4">
             <div>
-              <h2 className="text-4xl font-serif font-bold text-stone-900 tracking-tight">{title}</h2>
-              <p className="text-stone-500 font-sans mt-2 uppercase tracking-widest text-xs font-semibold">Crossword Puzzle</p>
+              <h2 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">{title}</h2>
+              <p className="text-stone-500 font-sans mt-1 uppercase tracking-widest text-[10px] font-semibold">Crossword Puzzle</p>
             </div>
-            <div className="flex gap-8 text-sm font-sans text-stone-600">
+            <div className="flex gap-6 text-sm font-sans text-stone-600">
               <div className="flex flex-col">
                 <span className="uppercase text-[10px] font-bold tracking-wider text-stone-400 mb-1">Name</span>
-                <div className="w-48 border-b border-stone-400 h-4"></div>
+                <div className="w-40 border-b border-stone-400 h-3"></div>
               </div>
               <div className="flex flex-col">
                 <span className="uppercase text-[10px] font-bold tracking-wider text-stone-400 mb-1">Date</span>
-                <div className="w-32 border-b border-stone-400 h-4"></div>
+                <div className="w-24 border-b border-stone-400 h-3"></div>
               </div>
             </div>
           </div>
