@@ -183,7 +183,7 @@ function generateLayoutAttempt(cleanWords: WordInput[]): CrosswordLayout | null 
     }
 
     let bestPlacement = null;
-    let bestScore = Infinity;
+    let bestScore = -Infinity;
 
     for (let i = 0; i < w.word.length; i++) {
       const letter = w.word[i];
