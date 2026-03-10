@@ -1,20 +1,25 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Crossword Forge
 
-# Run and deploy your AI Studio app
+Crossword Forge is a premium, beautifully crafted application for generating professional-grade crossword puzzles. Designed with a paradoxically vintage and modern aesthetic, it serves educators, publishers, and puzzle enthusiasts who demand high-quality, print-ready layouts.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/fcff3f68-7241-47f7-8090-64d7989a8a91
+- **Modern & Vintage UX/UI:** An elegant interface combining classic typography with modern interactions.
+- **Advanced Generation:** Efficient algorithm to place words and create dense, satisfying puzzles.
+- **Bulk Import:** Quickly paste lists of words and clues to generate puzzles instantly.
+- **Print-Ready:** Perfectly formatted for physical printing with distinct puzzle and clue pages.
+- **Responsive:** Fully functional across all device sizes.
 
-## Run Locally
+## Getting Started
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+2. Run the application:
+   ```bash
+   npm run dev
+   ```
+3. Open `http://localhost:3000` in your browser.
