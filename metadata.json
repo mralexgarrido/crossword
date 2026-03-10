@@ -1,0 +1,5 @@
+{
+  "name": "Crossword Generator",
+  "description": "A teacher-focused tool to generate printable crossword puzzles from keyword and description combinations.",
+  "requestFramePermissions": []
+}
