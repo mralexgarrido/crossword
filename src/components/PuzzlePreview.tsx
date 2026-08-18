@@ -6,14 +6,20 @@ interface PuzzlePreviewProps {
   layout: CrosswordLayout | null;
   title: string;
   showAnswers: boolean;
+  showWordBank?: boolean;
+  showLetterCounts?: boolean;
 }
 
-export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps) {
-  // Calculate dynamic cell size for print to fit page
+export function PuzzlePreview({
+  layout,
+  title,
+  showAnswers,
+  showWordBank = false,
+  showLetterCounts = true
+}: PuzzlePreviewProps) {
   const getCellSize = () => {
     if (!layout) return '2rem';
     const maxDim = Math.max(layout.cols, layout.rows);
-    // Max width ~700px. 700 / maxDim
     const sizePx = Math.floor(700 / maxDim);
     return `${Math.min(32, Math.max(16, sizePx))}px`;
   };
@@ -49,7 +55,7 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
         </div>
       )}
 
-      {/* PAGE 1: The Puzzle */}
+      {/* PAGE 1: The Puzzle Grid & Word Bank */}
       <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 print:shadow-none print:border-none print:p-0 print:m-0">
 
         {/* Web Preview Header */}
@@ -115,12 +121,30 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
             )}
           </div>
         </div>
+
+        {/* Word Bank on Print & Web Preview */}
+        {showWordBank && layout.placedWords.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-gray-200 print:mt-6 print:pt-4">
+            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">
+              Word Bank
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2 print:gap-1.5">
+              {layout.placedWords.map((w) => (
+                <span
+                  key={w.id}
+                  className="px-3 py-1 bg-gray-100 print:bg-transparent print:border print:border-gray-400 text-gray-800 rounded-lg text-xs font-mono font-semibold uppercase print:text-[10px] print:py-0.5 print:px-2"
+                >
+                  {w.word}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* PAGE 2: The Clues */}
       <div className="page-break bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 print:shadow-none print:border-none print:p-0 print:m-0 print:pt-2">
         <div className="hidden print:hidden mb-8 text-center">
-          {/* Header explicitly hidden in print to save space for dense clues */}
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">{title}</h2>
           <p className="text-gray-500 mt-1 uppercase tracking-widest text-[10px] font-bold">Clues</p>
         </div>
@@ -138,6 +162,9 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
                     <span className="font-bold text-gray-900 shrink-0 w-6 print:w-3.5 text-right print:text-[10px]">{w.number}.</span>
                     <span className="text-[15px] print:text-[10px]">
                       {w.clue}
+                      {showLetterCounts && (
+                        <span className="text-gray-400 ml-1 font-normal print:text-[9px]">({w.word.length})</span>
+                      )}
                       {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[9px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
                     </span>
                   </li>
@@ -160,6 +187,9 @@ export function PuzzlePreview({ layout, title, showAnswers }: PuzzlePreviewProps
                     <span className="font-bold text-gray-900 shrink-0 w-6 print:w-3.5 text-right print:text-[10px]">{w.number}.</span>
                     <span className="text-[15px] print:text-[10px]">
                       {w.clue}
+                      {showLetterCounts && (
+                        <span className="text-gray-400 ml-1 font-normal print:text-[9px]">({w.word.length})</span>
+                      )}
                       {showAnswers && <span className="ml-2 text-blue-600 text-sm print:text-[9px] uppercase font-bold" style={{fontFamily: 'monospace'}}>[{w.word}]</span>}
                     </span>
                   </li>
