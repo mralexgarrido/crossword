@@ -13,6 +13,7 @@ export default function App() {
     showAnswers,
     showWordBank,
     showLetterCounts,
+    soundEnabled,
     title,
     mode,
     userAnswers,
@@ -25,6 +26,7 @@ export default function App() {
     setTitle,
     setShowWordBank,
     setShowLetterCounts,
+    toggleSound,
     setIsTimerRunning,
     handleAddWord,
     handleRemoveWord,
@@ -57,10 +59,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 font-sans text-zinc-100 flex flex-col">
       <Header
         mode={mode}
         showAnswers={showAnswers}
+        soundEnabled={soundEnabled}
+        onToggleSound={toggleSound}
         onToggleMode={toggleMode}
         onToggleAnswers={toggleShowAnswers}
         onPrint={handlePrint}
@@ -75,6 +79,7 @@ export default function App() {
             title={title}
             setTitle={setTitle}
             words={words}
+            layout={layout}
             showWordBank={showWordBank}
             setShowWordBank={setShowWordBank}
             showLetterCounts={showLetterCounts}
@@ -90,7 +95,7 @@ export default function App() {
           />
         )}
 
-        <div className="flex-1 overflow-y-auto bg-gray-50/50 p-4 lg:p-8 print:p-0 print:bg-white print:overflow-visible relative">
+        <div className="flex-1 overflow-y-auto bg-zinc-900/50 p-4 lg:p-8 print:p-0 print:bg-white print:overflow-visible relative">
           <div className="relative z-10">
             {mode === 'builder' ? (
               <PuzzlePreview

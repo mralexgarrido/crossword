@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { generateCrossword, WordInput, CrosswordLayout, Direction } from '../lib/crossword';
 import { PRESET_THEMES } from '../lib/presets';
+import { sound } from '../lib/audio';
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
@@ -16,6 +17,7 @@ export function useCrosswordBuilder() {
   const [showAnswers, setShowAnswers] = useState(false);
   const [showWordBank, setShowWordBank] = useState(false);
   const [showLetterCounts, setShowLetterCounts] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const [title, setTitle] = useState('Science Vocabulary: Plants');
   const [mode, setMode] = useState<'builder' | 'play'>('builder');
 
@@ -29,6 +31,14 @@ export function useCrosswordBuilder() {
   const [isCompleted, setIsCompleted] = useState(false);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const toggleSound = useCallback(() => {
+    setSoundEnabled(prev => {
+      const next = !prev;
+      sound.enabled = next;
+      return next;
+    });
+  }, []);
 
   const generate = useCallback((wordList: WordInput[]) => {
     const validWords = wordList.filter(w => w.word.trim() !== '' && w.clue.trim() !== '');
@@ -45,7 +55,6 @@ export function useCrosswordBuilder() {
     setIsCompleted(false);
     setElapsedTime(0);
 
-    // Set initial focused cell on first placed word if available
     if (newLayout.placedWords.length > 0) {
       const first = newLayout.placedWords[0];
       setFocusedCell({ x: first.x, y: first.y });
@@ -60,19 +69,16 @@ export function useCrosswordBuilder() {
   }, [words, generate]);
 
   const handleReshuffle = useCallback(() => {
-    // Generate new layout variation
     if (words.length > 0) {
       generate(words);
     }
   }, [words, generate]);
 
-  // Initial generation on mount
   useEffect(() => {
     generate(words);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Timer logic for Play mode
   useEffect(() => {
     if (mode === 'play' && !isCompleted && isTimerRunning) {
       timerRef.current = setInterval(() => {
@@ -86,7 +92,6 @@ export function useCrosswordBuilder() {
     };
   }, [mode, isCompleted, isTimerRunning]);
 
-  // Check completion whenever userAnswers change in play mode
   useEffect(() => {
     if (!layout || mode !== 'play' || isCompleted) return;
 
@@ -201,7 +206,6 @@ export function useCrosswordBuilder() {
     });
   }, []);
 
-  // Helper functions for cell navigation
   const getNextCell = useCallback((x: number, y: number, dir: Direction, step = 1) => {
     if (!layout) return null;
     const nx = dir === 'across' ? x + step : x;
@@ -218,7 +222,6 @@ export function useCrosswordBuilder() {
     if (!layout || !layout.grid[y][x]) return;
 
     if (focusedCell && focusedCell.x === x && focusedCell.y === y) {
-      // Toggle direction if clicking same cell
       setDirection(prev => (prev === 'across' ? 'down' : 'across'));
     } else {
       setFocusedCell({ x, y });
@@ -232,14 +235,12 @@ export function useCrosswordBuilder() {
     if (char >= 'A' && char <= 'Z') {
       const key = `${focusedCell.x},${focusedCell.y}`;
       setUserAnswers(prev => ({ ...prev, [key]: char }));
-      // Clear checked status for this cell
       setCheckedCells(prev => {
         const copy = { ...prev };
         delete copy[key];
         return copy;
       });
 
-      // Advance to next cell in current direction
       const next = getNextCell(focusedCell.x, focusedCell.y, direction, 1);
       if (next) {
         setFocusedCell(next);
@@ -262,7 +263,6 @@ export function useCrosswordBuilder() {
           return copy;
         });
       } else {
-        // Move back
         const prev = getNextCell(x, y, direction, -1);
         if (prev) {
           setFocusedCell(prev);
@@ -296,7 +296,6 @@ export function useCrosswordBuilder() {
       if (prev) setFocusedCell(prev);
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      // Jump to next word start
       if (layout.placedWords.length > 0) {
         const currentIdx = layout.placedWords.findIndex(w => w.x === x && w.y === y);
         const nextIdx = (currentIdx + 1) % layout.placedWords.length;
@@ -307,7 +306,6 @@ export function useCrosswordBuilder() {
     }
   }, [focusedCell, layout, mode, userAnswers, direction, getNextCell]);
 
-  // Hint actions
   const checkLetter = useCallback(() => {
     if (!focusedCell || !layout) return;
     const { x, y } = focusedCell;
@@ -439,7 +437,6 @@ export function useCrosswordBuilder() {
     setIsTimerRunning(true);
   }, []);
 
-  // JSON Save / Load
   const exportJSON = useCallback(() => {
     const data = {
       title,
@@ -480,6 +477,7 @@ export function useCrosswordBuilder() {
     showAnswers,
     showWordBank,
     showLetterCounts,
+    soundEnabled,
     title,
     mode,
     userAnswers,
@@ -492,6 +490,7 @@ export function useCrosswordBuilder() {
     setTitle,
     setShowWordBank,
     setShowLetterCounts,
+    toggleSound,
     setMode,
     setIsTimerRunning,
     handleAddWord,
