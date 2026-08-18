@@ -14,6 +14,7 @@ export default function App() {
     showWordBank,
     showLetterCounts,
     soundEnabled,
+    themeMode,
     title,
     mode,
     userAnswers,
@@ -27,6 +28,7 @@ export default function App() {
     setShowWordBank,
     setShowLetterCounts,
     toggleSound,
+    toggleThemeMode,
     setIsTimerRunning,
     handleAddWord,
     handleRemoveWord,
@@ -58,13 +60,19 @@ export default function App() {
     window.print();
   };
 
+  const isDark = themeMode === 'dark';
+
   return (
-    <div className="min-h-screen bg-zinc-950 font-sans text-zinc-100 flex flex-col">
+    <div className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${
+      isDark ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-100 text-zinc-900'
+    }`}>
       <Header
         mode={mode}
         showAnswers={showAnswers}
         soundEnabled={soundEnabled}
+        themeMode={themeMode}
         onToggleSound={toggleSound}
+        onToggleThemeMode={toggleThemeMode}
         onToggleMode={toggleMode}
         onToggleAnswers={toggleShowAnswers}
         onPrint={handlePrint}
@@ -84,6 +92,7 @@ export default function App() {
             setShowWordBank={setShowWordBank}
             showLetterCounts={showLetterCounts}
             setShowLetterCounts={setShowLetterCounts}
+            themeMode={themeMode}
             onAddWord={handleAddWord}
             onRemoveWord={handleRemoveWord}
             onClearWords={handleClearWords}
@@ -95,7 +104,9 @@ export default function App() {
           />
         )}
 
-        <div className="flex-1 overflow-y-auto bg-zinc-900/50 p-4 lg:p-8 print:p-0 print:bg-white print:overflow-visible relative">
+        <div className={`flex-1 overflow-y-auto p-4 lg:p-8 print:p-0 print:bg-white print:overflow-visible relative ${
+          isDark ? 'bg-zinc-900/40' : 'bg-zinc-100/50'
+        }`}>
           <div className="relative z-10">
             {mode === 'builder' ? (
               <PuzzlePreview

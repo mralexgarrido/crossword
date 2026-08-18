@@ -18,6 +18,7 @@ export function useCrosswordBuilder() {
   const [showWordBank, setShowWordBank] = useState(false);
   const [showLetterCounts, setShowLetterCounts] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [themeMode, setThemeMode] = useState<'dark' | 'light'>('dark');
   const [title, setTitle] = useState('Science Vocabulary: Plants');
   const [mode, setMode] = useState<'builder' | 'play'>('builder');
 
@@ -31,6 +32,10 @@ export function useCrosswordBuilder() {
   const [isCompleted, setIsCompleted] = useState(false);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const toggleThemeMode = useCallback(() => {
+    setThemeMode(prev => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   const toggleSound = useCallback(() => {
     setSoundEnabled(prev => {
@@ -478,6 +483,7 @@ export function useCrosswordBuilder() {
     showWordBank,
     showLetterCounts,
     soundEnabled,
+    themeMode,
     title,
     mode,
     userAnswers,
@@ -491,6 +497,7 @@ export function useCrosswordBuilder() {
     setShowWordBank,
     setShowLetterCounts,
     toggleSound,
+    toggleThemeMode,
     setMode,
     setIsTimerRunning,
     handleAddWord,

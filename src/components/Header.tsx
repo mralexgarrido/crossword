@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
-import { Printer, Edit3, Play, Sparkles, Download, Upload, Volume2, VolumeX, Grid } from 'lucide-react';
+import { Printer, Edit3, Play, Sparkles, Download, Upload, Volume2, VolumeX, Grid, Sun, Moon } from 'lucide-react';
 
 interface HeaderProps {
   mode: 'builder' | 'play';
   showAnswers: boolean;
   soundEnabled: boolean;
+  themeMode: 'dark' | 'light';
   onToggleSound: () => void;
+  onToggleThemeMode: () => void;
   onToggleMode: () => void;
   onToggleAnswers: () => void;
   onPrint: () => void;
@@ -18,7 +20,9 @@ export function Header({
   mode,
   showAnswers,
   soundEnabled,
+  themeMode,
   onToggleSound,
+  onToggleThemeMode,
   onToggleMode,
   onToggleAnswers,
   onPrint,
@@ -42,31 +46,33 @@ export function Header({
     }
   };
 
+  const isDark = themeMode === 'dark';
+
   return (
-    <header className="bg-zinc-900 text-zinc-100 border-b border-zinc-800 px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 print:hidden shadow-md">
+    <header className={`${isDark ? 'bg-zinc-900 text-zinc-100 border-zinc-800' : 'bg-white text-zinc-900 border-zinc-200'} border-b px-4 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-30 print:hidden shadow-sm transition-colors duration-200`}>
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-600 to-red-500 flex items-center justify-center text-white shadow-sm shadow-orange-500/20">
             <Grid size={18} />
           </div>
           <div>
-            <h1 className="text-base sm:text-lg font-extrabold tracking-tight text-white flex items-center gap-2">
+            <h1 className={`text-base sm:text-lg font-extrabold tracking-tight flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
               Crossword<span className="text-orange-500 font-black">Forge</span>
             </h1>
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider hidden sm:block">
+            <p className={`text-[10px] font-bold uppercase tracking-wider hidden sm:block ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>
               Pro Studio & Interactive Solver
             </p>
           </div>
         </div>
 
         {/* Builder / Play Mode Switcher Pill */}
-        <div className="bg-zinc-800/80 p-1 rounded-xl flex items-center border border-zinc-700/60">
+        <div className={`p-1 rounded-xl flex items-center border ${isDark ? 'bg-zinc-800/80 border-zinc-700/60' : 'bg-zinc-100 border-zinc-200'}`}>
           <button
             onClick={mode === 'play' ? onToggleMode : undefined}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all ${
               mode === 'builder'
-                ? 'bg-zinc-100 text-zinc-900 shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? isDark ? 'bg-zinc-100 text-zinc-900 shadow-sm' : 'bg-white text-orange-600 shadow-sm'
+                : isDark ? 'text-zinc-400 hover:text-zinc-200' : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
             <Edit3 size={14} /> Builder
@@ -76,7 +82,7 @@ export function Header({
             className={`px-3 py-1.5 text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all ${
               mode === 'play'
                 ? 'bg-gradient-to-r from-orange-600 to-red-500 text-white shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200'
+                : isDark ? 'text-zinc-400 hover:text-zinc-200' : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
             <Play size={14} /> Play Mode
@@ -85,27 +91,52 @@ export function Header({
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3">
+        {/* Theme Toggle Button */}
+        <button
+          onClick={onToggleThemeMode}
+          className={`p-2 rounded-xl transition-all border ${
+            isDark
+              ? 'text-amber-400 bg-zinc-800 hover:bg-zinc-700 border-zinc-700/60'
+              : 'text-zinc-700 bg-zinc-100 hover:bg-zinc-200 border-zinc-200'
+          }`}
+          title={isDark ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
+        >
+          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
+
         {/* Mute/Sound Toggle */}
         <button
           onClick={onToggleSound}
-          className="p-2 text-zinc-400 hover:text-zinc-100 bg-zinc-800 hover:bg-zinc-700 rounded-xl transition-all border border-zinc-700/50"
+          className={`p-2 rounded-xl transition-all border ${
+            isDark
+              ? 'text-zinc-400 hover:text-zinc-100 bg-zinc-800 hover:bg-zinc-700 border-zinc-700/50'
+              : 'text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200 border-zinc-200'
+          }`}
           title={soundEnabled ? 'Mute Sounds' : 'Enable Sounds'}
         >
-          {soundEnabled ? <Volume2 size={16} className="text-orange-400" /> : <VolumeX size={16} />}
+          {soundEnabled ? <Volume2 size={16} className="text-orange-500" /> : <VolumeX size={16} />}
         </button>
 
         {/* Presets Button */}
         <button
           onClick={onOpenPresets}
-          className="hidden md:flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-zinc-200 bg-zinc-800 hover:bg-zinc-700 rounded-xl transition-all border border-zinc-700/60"
+          className={`hidden md:flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl transition-all border ${
+            isDark
+              ? 'text-zinc-200 bg-zinc-800 hover:bg-zinc-700 border-zinc-700/60'
+              : 'text-zinc-700 bg-zinc-100 hover:bg-zinc-200 border-zinc-200'
+          }`}
         >
-          <Sparkles size={14} className="text-orange-400" /> Presets
+          <Sparkles size={14} className="text-orange-500" /> Presets
         </button>
 
         {/* JSON Export/Import */}
         <button
           onClick={onExportJSON}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-zinc-300 bg-zinc-800 hover:bg-zinc-700 rounded-xl transition-all border border-zinc-700/50"
+          className={`hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl transition-all border ${
+            isDark
+              ? 'text-zinc-300 bg-zinc-800 hover:bg-zinc-700 border-zinc-700/50'
+              : 'text-zinc-700 bg-zinc-100 hover:bg-zinc-200 border-zinc-200'
+          }`}
           title="Save puzzle as JSON file"
         >
           <Download size={14} /> Save JSON
@@ -113,7 +144,11 @@ export function Header({
 
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-zinc-300 bg-zinc-800 hover:bg-zinc-700 rounded-xl transition-all border border-zinc-700/50"
+          className={`hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl transition-all border ${
+            isDark
+              ? 'text-zinc-300 bg-zinc-800 hover:bg-zinc-700 border-zinc-700/50'
+              : 'text-zinc-700 bg-zinc-100 hover:bg-zinc-200 border-zinc-200'
+          }`}
           title="Load puzzle from JSON file"
         >
           <Upload size={14} /> Load JSON
@@ -129,7 +164,11 @@ export function Header({
         {mode === 'builder' && (
           <button
             onClick={onToggleAnswers}
-            className="px-3 py-2 text-xs font-bold text-zinc-200 bg-zinc-800 hover:bg-zinc-700 rounded-xl transition-all border border-zinc-700/50"
+            className={`px-3 py-2 text-xs font-bold rounded-xl transition-all border ${
+              isDark
+                ? 'text-zinc-200 bg-zinc-800 hover:bg-zinc-700 border-zinc-700/50'
+                : 'text-zinc-700 bg-zinc-100 hover:bg-zinc-200 border-zinc-200'
+            }`}
             aria-pressed={showAnswers}
           >
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
